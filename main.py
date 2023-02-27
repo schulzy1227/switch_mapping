@@ -22,6 +22,7 @@ for index, row in site_health.iterrows():
 for each in name_ip_list:
     for k, v in each.items():
         print(k, v)
+        print("hello")
 
 # loop through selecting keys and values
 # for each in ip_port_list:
