@@ -2,18 +2,22 @@ import pandas as pd
 import os
 import shutil
 
-switches = ['Switch_50', 'Switch_51', 'Switch_60', 'Switch_70', 'Switch_80',
-            'Switch_90', 'Switch_200', 'Switch_201', 'Switch_202', 'Switch_203']
-#
-parent_directory = "C:\\Switch_Charts\\"
-data_file = input("Which swich needs to be mapped? (format ex: ""Switch_50"")")
-# data_file = 'Switch_50'
-path = os.path.join(parent_directory, data_file + '\\')
-if os.path.exists(path):
-    shutil.rmtree(path)
-os.mkdir(path)
+'''REMEMEBER TO ADD SWITCH 60 TO LIST'''
 
-data_one = pd.read_csv(parent_directory + data_file + '.csv')
+parent_directory = "C:\\Switch_Charts\\"
+path = os.path.join(parent_directory + '\\')
+switches = ['Switch_50', 'Switch_51', 'Switch_70', 'Switch_80',
+            'Switch_90', 'Switch_200', 'Switch_201', 'Switch_202', 'Switch_203',
+            'Switch_204', 'Switch_205', 'Switch_206', 'Switch_220']
+
+# data_file = input("Which swich needs to be mapped? (format ex: ""Switch_50"")")
+# data_file = 'Switch_50'
+# path = os.path.join(parent_directory, data_file + '\\')
+# if os.path.exists(path):
+#     shutil.rmtree(path)
+# os.mkdir(path)
+
+# data_one = pd.read_csv(parent_directory + data_file + '.csv')
 
 addresses = []
 names = []
@@ -21,6 +25,10 @@ ports = []
 name_ip_list = []
 # generate list of dictionaries for IP address and Port pairs
 def map_switches(current_switch):
+    data_one = pd.read_csv(parent_directory + current_switch + '.csv')
+    if os.path.exists(path):
+        shutil.rmtree(path)
+    os.mkdir(path)
     for index, row in data_one.iterrows():
         ip_add = row[0]
         switch_port = row[5]
@@ -45,17 +53,17 @@ def map_switches(current_switch):
     final_list = list(list_zip)
     print(*final_list, sep="\n")
 
-    with open(path + '\\' + data_file + '_final.csv', 'w') as final_file:
+    with open(path + '\\' + current_switch + '_final.csv', 'w') as final_file:
         for line in final_list:
             final_file.write(f"{line}\n")
 
-    os.remove(parent_directory + data_file + '.csv')
+    # os.remove(parent_directory + current_switch + '.csv')
 
-# def main():
-#     print("Mapping...")
-#     for switch in switches:
-#         map_switches(switch)
-#
-# main()
+def main():
+    print("Mapping...")
+    for switch in switches:
+        map_switches(switch)
+
+main()
 
 
